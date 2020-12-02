@@ -1,6 +1,6 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::view('/','welcome');
+//用户管理
+Route::prefix('user')->group(function(){
+    Route::view('create','user.create');
+    Route::post('store',[UserController::class,'store'])->name('user.store');
 });

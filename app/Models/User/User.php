@@ -2,25 +2,48 @@
 
 namespace App\Models\User;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class User extends Model
+class User
 {
-    use HasFactory;
-    use Store, Delete, Update, Show;
-    public $table = 'all_user';
+    protected $userEloquent;
 
-    public function setUserPassword($password)
+    public function __construct(UserEloquent $userEloquent)
     {
-        $this->user_password = md5($password);
-        return $this;
+        $this->userEloquent = $userEloquent;
     }
 
-    public function setUserName($name)
+    public function allUser()
     {
-        $this->user_name = $name;
-        return $this;
+        return $this->userEloquent->all();
     }
-//    public function ifNameUnique()
+
+    public function getUserById($v)
+    {
+        return $this->userEloquent->whereId($v)->get();
+    }
+
+    public function StoreUser($user_name, $user_password)
+    {
+
+        if (!$this->userEloquent->ifUniqueName($user_name))
+            throw new \Exception('用户名已存在');
+
+        $data = compact('user_name', "user_password");
+        $this->userEloquent->setData($data)->save();
+    }
+
+    public function updateUserById($id, $data)
+    {
+        if($id == 1)
+            throw new \Exception('管理员不允许更改!');
+        if (!$this->userEloquent->ifUniqueNameInLeft($id, $data['user_name']))
+            throw new \Exception('用户名已存在');
+        $data['user_password'] = $this->userEloquent->makePassword($data['user_password']);
+        $this->userEloquent->whereId($data['id'])->update($data);
+    }
+    public function deleteUserById($id)
+    {
+        if($id == 1)
+            throw new \Exception('管理员信息不允许修改!');
+        $this->userEloquent->whereId($id)->delete();
+    }
 }

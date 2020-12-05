@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
     @stack('css')
 </head>
-<script type="text/javascript" src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('jquery-3.4.1/jquery-3.4.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 @stack('js')
 <body>
     @yield('header')

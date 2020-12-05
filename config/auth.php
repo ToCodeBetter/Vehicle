@@ -50,7 +50,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | User Providers
+    | UserEloquent Providers
     |--------------------------------------------------------------------------
     |
     | All authentication drivers have a user provider. This defines how the

@@ -15,6 +15,11 @@ use App\Http\Controllers\UserController;
 Route::view('/','welcome');
 //用户管理
 Route::prefix('user')->group(function(){
-    Route::view('create','user.create');
+    Route::view('create','user.create')->name('user.create');
     Route::post('store',[UserController::class,'store'])->name('user.store');
+    Route::delete('delete',[UserController::class,'delete'])->name('user.delete');
+    Route::get('show',[UserController::class,'show'])->name('user.show');
+    Route::get('edit',[UserController::class,'edit'])->name('user.edit');
+    Route::put('update',[UserController::class,'update'])->name('user.update');
+    Route::delete('delete',[UserController::class,'delete'])->name('user.delete');
 });
